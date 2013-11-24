@@ -1,0 +1,29 @@
+{
+  "name": "windows_firewall",
+  "description": "Installs/Configures windows_firewall",
+  "long_description": "windows_firewall Cookbook\n====================\nThis cookbook configures windows firewall rules\n\nRequirements\n------------\nNone\n\nResources\n-----------------\n\nrule\n==================\n\n### Actions\n\n:open - opens the specified port\n\n### Attribute Parameters\n\n- attribute :port, :kind_of => Integer\n- attribute :name, :kind_of => String, :name_attribute => true\n- attribute :direction, :kind_of => Symbol, :default => :in, :equal_to => [:in, :out]\n- attribute :protocol, :kind_of => Symbol, :default => :TCP, :equal_to => [:TCP]\n- attribute :firewall_action, :kind_of => Symbol, :default => :allow, :equal_to => [:allow, :deny]\n\n### Examples\n\n    windows_firewall_rule 'Apache' do\n          port 8080\n          protocol :TCP\n          firewall_action :allow\n    end",
+  "maintainer": "YOUR_COMPANY_NAME",
+  "maintainer_email": "YOUR_EMAIL",
+  "license": "All rights reserved",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0"
+}
