@@ -15,8 +15,6 @@ action :open do
 		args['program'] = @new_resource.program
 		args['remoteip'] = @new_resource.remoteaddress
 		
-		
-		
 		cmdargs = args.map{|k,v| "#{k}=#{v}"}.join(' ')
 
     currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
