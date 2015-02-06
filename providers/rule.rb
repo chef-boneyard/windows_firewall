@@ -11,6 +11,8 @@ action :open do
     args['action'] = @new_resource.firewall_action
     args['protocol'] = @new_resource.protocol
     args['localport'] = @new_resource.port
+    args['localip'] = @new_resource.localip
+    args['remoteip'] = @new_resource.remoteip
     
     cmdargs = args.map{|k,v| "#{k}=#{v}"}.join(' ')
 
@@ -20,7 +22,7 @@ action :open do
       cmd = "netsh advfirewall firewall add rule #{cmdargs}"
 
       Chef::Log.debug("Running firewall command: #{cmd}")
-      windows_batch cmd do
+      batch cmd do
         code cmd
       end
     else
