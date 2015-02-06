@@ -27,4 +27,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[windows_firewall::default]
+      - recipe[rule_test::default]
