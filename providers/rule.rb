@@ -13,12 +13,12 @@ action :open do
     args['localport'] = @new_resource.port
     args['localip'] = @new_resource.localip
     args['remoteip'] = @new_resource.remoteip
-    
-    cmdargs = args.map{|k,v| "#{k}=#{v}"}.join(' ')
+
+    cmdargs = args.map { |k, v | "#{k}=#{v}" }.join(' ')
 
     currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
 
-    if(currentRule.stdout.strip() == 'No rules match the specified criteria.')
+    if (currentRule.stdout.strip() == 'No rules match the specified criteria.')
       cmd = "netsh advfirewall firewall add rule #{cmdargs}"
 
       Chef::Log.debug("Running firewall command: #{cmd}")
