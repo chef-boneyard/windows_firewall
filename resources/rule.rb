@@ -9,9 +9,6 @@ attribute :remoteport, :kind_of => String, :default => :Any
 attribute :program, :kind_of => String, :default => :Any
 attribute :remoteaddress, :kind_of => String, :default => :Any
 
-
-
-
 def initialize(*args)
   super
   @action = :open

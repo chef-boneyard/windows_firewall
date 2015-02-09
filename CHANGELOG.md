@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 0.2.0
+
+Added remoteip and localip attributes. Added Berksfile and preliminary test-kitchen harness. Several bits of cleanup that should not introduce any breaking changes, but a version bump seemed prudent.
+
 ## 0.1.0:
 
 * Initial release of windows_firewall
