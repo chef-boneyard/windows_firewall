@@ -10,10 +10,11 @@ action :open do
     args['dir'] = @new_resource.direction
     args['action'] = @new_resource.firewall_action
     args['protocol'] = @new_resource.protocol
-    args['localport'] = @new_resource.localport
     args['remoteport'] = @new_resource.remoteport
+    args['localport'] = @new_resource.localport
     args['program'] = @new_resource.program
-    args['remoteip'] = @new_resource.remoteaddress
+    args['remoteip'] = @new_resource.remoteip
+    args['localip'] = @new_resource.localip
 
     cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
