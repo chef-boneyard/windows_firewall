@@ -7,14 +7,15 @@ action :open do
 
     name = @new_resource.name
     args['name'] = "\"#{name}\""
-    args['dir'] = @new_resource.direction
-    args['action'] = @new_resource.firewall_action
-    args['protocol'] = @new_resource.protocol
-    args['localport'] = @new_resource.port
-    args['localip'] = @new_resource.localip
-    args['remoteip'] = @new_resource.remoteip
-
-    cmdargs = args.map { |k, v | "#{k}=#{v}" }.join(' ')
+		args['dir'] = @new_resource.direction
+		args['action'] = @new_resource.firewall_action
+		args['protocol'] = @new_resource.protocol
+		args['localport'] = @new_resource.localport
+		args['remoteport'] = @new_resource.remoteport
+		args['program'] = @new_resource.program
+		args['remoteip'] = @new_resource.remoteaddress
+		
+		cmdargs = args.map{|k,v| "#{k}=#{v}"}.join(' ')
 
     currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
 
