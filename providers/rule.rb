@@ -7,6 +7,7 @@ action :open do
 
     name = @new_resource.name
     desc = @new_resource.description
+    program = @new_resource.program
     args['name'] = "\"#{name}\""
     args['description'] = "\"#{desc}\""
     args['localip'] = @new_resource.localip
@@ -17,7 +18,7 @@ action :open do
     args['protocol'] = @new_resource.protocol
     args['action'] = @new_resource.firewall_action
     args['profile'] = @new_resource.profile
-    args['program'] = @new_resource.program
+    args['description'] = "\"#{program}\""
     args['service'] = @new_resource.service
     args['interfacetype'] = @new_resource.interfacetype
 
