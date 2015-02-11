@@ -40,4 +40,6 @@ action :open do
       Chef::Log.info("Firewall rule \"#{name}\" already exists.")
     end
   end
+
+  new_resource.updated_by_last_action(true)
 end
