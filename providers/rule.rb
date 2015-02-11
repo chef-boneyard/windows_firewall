@@ -14,18 +14,22 @@ action :open do
     args['remoteport'] = @new_resource.remoteport
     args['dir'] = @new_resource.dir
     args['protocol'] = @new_resource.protocol
-    args['firewall_action'] = @new_resource.firewall_action
+    args['action'] = @new_resource.firewall_action
     args['profile'] = @new_resource.profile
     args['program'] = @new_resource.program
     args['service'] = @new_resource.service
-    args['interface_type'] = @new_resource.interface_type
+    args['interfacetype'] = @new_resource.interfacetype
 
-    cmd = args.map { |k, v| "#{k}=#{v}" }.join(' ')
+    # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
-    currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
+    current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
 
-    if (currentRule.stdout.strip() == 'No rules match the specified criteria.')
-      cmd = "netsh advfirewall firewall add rule name=\"#{new_resource.name}\" "
+    if (current_rule.stdout.strip == 'No rules match the specified criteria.')
+      # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
+      cmd = 'net advfirewall firewall add '
+      args.each do | attribute, value |
+        cmd += "#{attribute}=#{value} " if attribute.value
+      end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
       batch cmd do
