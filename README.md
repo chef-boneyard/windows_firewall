@@ -40,7 +40,7 @@ firewall_rule attributes are as follows:
 -remoteport - can by 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
 -dir         - { in | out }
 -protocol    - can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } 
--fw_action   - { allow | block | bypass }
+-firewall_action   - { allow | block | bypass }
 -profile     - { public | private | domain | any | [ ,... ] } ]
 -program     - the path to the program
 -service     - the short name of the service, or 'any'
