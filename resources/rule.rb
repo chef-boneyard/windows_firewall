@@ -12,7 +12,7 @@ attribute :firewall_action, :kind_of => Symbol, :default => :allow, :equal_to =>
 attribute :profile, :kind_of => Symbol, :default :any, :equal_to => [:public, :private, :domain, :any]
 attribute :program, :kind_of => String, :default => 'Any'
 attribute :service, :kind_of => String, :default => 'Any'
-attribute :interface_type, :kind of => Symbol, :default => :any, :equal_to => [ :any, :wireless, :lan, :ras ]
+attribute :interface_type, :kind_of => Symbol, :default => :any, :equal_to => [ :any, :wireless, :lan, :ras ]
 
 
 def initialize(*args)

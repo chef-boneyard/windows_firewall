@@ -18,9 +18,9 @@ action :open do
     args['profile'] = @new_resource.profile
     args['program'] = @new_resource.program
     args['service'] = @new_resource.service
-    args['interface_type'] @new_resource.interface_type
+    args['interface_type'] = @new_resource.interface_type
 
-    cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
+    cmd = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
     currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
 
