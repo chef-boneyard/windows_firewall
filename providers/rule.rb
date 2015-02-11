@@ -6,8 +6,9 @@ action :open do
     args = Hash.new
 
     name = @new_resource.name
+    desc = @new_resource.description
     args['name'] = "\"#{name}\""
-    args['description'] = @new_resource.description
+    args['description'] = "\"#{desc}\""
     args['localip'] = @new_resource.localip
     args['localport'] = @new_resource.localport
     args['remoteip'] = @new_resource.remoteip
@@ -26,9 +27,9 @@ action :open do
 
     if (current_rule.stdout.strip == 'No rules match the specified criteria.')
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
-      cmd = 'net advfirewall firewall add '
+      cmd = 'netsh advfirewall firewall add rule '
       args.each do | attribute, value |
-        cmd += "#{attribute}=#{value} " if attribute.value
+        cmd += "#{attribute}=#{value} " if value
       end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
