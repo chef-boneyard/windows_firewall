@@ -7,21 +7,25 @@ action :open do
 
     name = @new_resource.name
     args['name'] = "\"#{name}\""
-    args['dir'] = @new_resource.direction
-    args['action'] = @new_resource.firewall_action
-    args['protocol'] = @new_resource.protocol
-    args['remoteport'] = @new_resource.remoteport
-    args['localport'] = @new_resource.localport
-    args['program'] = @new_resource.program
-    args['remoteip'] = @new_resource.remoteip
+    args['description'] = @new_resource.description
     args['localip'] = @new_resource.localip
+    args['localport'] = @new_resource.localport
+    args['remoteip'] = @new_resource.remoteip
+    args['remoteport'] = @new_resource.remoteport
+    args['dir'] = @new_resource.dir
+    args['protocol'] = @new_resource.protocol
+    args['firewall_action'] = @new_resource.firewall_action
+    args['profile'] = @new_resource.profile
+    args['program'] = @new_resource.program
+    args['service'] = @new_resource.service
+    args['interface_type'] @new_resource.interface_type
 
     cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
     currentRule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
 
     if (currentRule.stdout.strip() == 'No rules match the specified criteria.')
-      cmd = "netsh advfirewall firewall add rule #{cmdargs}"
+      cmd = "netsh advfirewall firewall add rule name=\"#{new_resource.name}\" "
 
       Chef::Log.debug("Running firewall command: #{cmd}")
       batch cmd do

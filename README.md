@@ -27,15 +27,25 @@ rule
 
 :open - opens the specified port
 
-### Attribute Parameters
+# Attributes
 
-- attribute :port, :kind_of => Integer
-- attribute :name, :kind_of => String, :name_attribute => true
-- attribute :direction, :kind_of => Symbol, :default => :in, :equal_to => [:in, :out]
-- attribute :protocol, :kind_of => Symbol, :default => :TCP, :equal_to => [:TCP]
-- attribute :firewall_action, :kind_of => Symbol, :default => :allow, :equal_to => [:allow, :deny]
-- attribute :localip, :kind_of => String
-- attribute :remoteip, :kind_of => String
+firewall_rule attributes are as follows:
+
+```
+-name        - firewall rule name to create or delete.  You can use a name of 'all' in a delete to delete all rules that match other criteria
+-description - firewall rule description
+-localip    - can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by -
+-localport  - can by 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+-remoteip   - can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by -
+-remoteport - can by 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+-dir         - { in | out }
+-protocol    - can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } 
+-fw_action   - { allow | block | bypass }
+-profile     - { public | private | domain | any | [ ,... ] } ]
+-program     - the path to the program
+-service     - the short name of the service, or 'any'
+-interface_type - { any | wireless | lan | ras } ]
+```
 
 ### Examples
 
