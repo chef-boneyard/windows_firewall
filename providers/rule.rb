@@ -18,7 +18,7 @@ action :open do
     args['protocol'] = @new_resource.protocol
     args['action'] = @new_resource.firewall_action
     args['profile'] = @new_resource.profile
-    args['description'] = "\"#{program}\""
+    args['program'] = "\"#{program}\""
     args['service'] = @new_resource.service
     args['interfacetype'] = @new_resource.interfacetype
 
@@ -34,6 +34,7 @@ action :open do
       end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
+
       batch cmd do
         code cmd
       end
