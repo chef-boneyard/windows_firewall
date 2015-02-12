@@ -1,12 +1,11 @@
-windows_firewall Cookbook
-====================
-This cookbook configures windows firewall rules
+# windows_firewall Cookbook
 
-Requirements
-============
+This cookbook configures Windows firewall rules. 
 
-Platform
---------
+# Requirements
+Version 2.0.0+ of this cookbook requires Chef 11+
+
+## Platforms
 
 * Windows Vista
 * Windows 7
@@ -16,46 +15,47 @@ Platform
 * Windows Server 2012
 * Windows Server 2012R2
 
+## Usage
+In your recipe, you can use the `windows_firewall_rule` resource.  Currently, the only supported action is `:open`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.
 
-Resources
------------------
+This is a resource-only cookbook, and adding the default recipe to a node's runlist will have no effect.
 
-rule
-==================
+## Resources
 
-### Actions
+### windows_firewall_rule
 
-:open - opens the specified port
+#### Actions
 
-# Attributes
+:open - creates a firewall rule with the parameters supplied
 
-firewall_rule attributes are as follows:
+#### Attribute Parameters
+
+- `name` Name attribute. The name of the firewall rule name to create.
+- `description` The firewall rule description. Optional.
+- `localip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-'
+- `localport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+- `remoteip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-''
+- `remoteport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+- `dir` Direction of the rule. Can be in or out. Default is in.
+- `protocol` Can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } 
+- `firewall_action` Can be allow, block, or bypass. Default is 'allow'
+- `profile` Can be public, private, domain, or any
+- `program` The path to the program.
+- `service` The short name of the service, or 'any'
+- `interface_type` Can be any, wireless, lan, or ras
+
+
+#### Examples
 
 ```
--name        - firewall rule name to create or delete.  You can use a name of 'all' in a delete to delete all rules that match other criteria
--description - firewall rule description
--localip    - can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by -
--localport  - can by 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
--remoteip   - can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by -
--remoteport - can by 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
--dir         - { in | out }
--protocol    - can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } 
--firewall_action   - { allow | block | bypass }
--profile     - { public | private | domain | any | [ ,... ] } ]
--program     - the path to the program
--service     - the short name of the service, or 'any'
--interface_type - { any | wireless | lan | ras } ]
-```
-
-### Examples
-
     windows_firewall_rule 'Apache' do
-          port 8080
+          localport '8080'
           protocol :TCP
           firewall_action :allow
     end
+```
 
-License & Authors
+## License & Authors
 
 Author:: Matt Clifton (spartacus003@hotmail.com)
 Copyright:: 2013-2015 Matt Clifton
