@@ -4,14 +4,17 @@ This file is used to list changes made in each version of windows_firewall.
 
 ## 2.0.0
 
-MAJOR CHANGE. Could introduce breaking changes.
+BREAKING CHANGES
+* Change default action :open to :create
+
+MAJOR CHANGE
 * Test-kitchen support (only for Windows 2012R2 currently, but tests version 11 and 12 of chef-client)
 * Update metadata with proper attribution as well as Apache license
 * Add more attributes (including remoteip, program, service, etc)
 * Most attributes are set to nil by default and only added to the command if present
 * Style cleanup from rubocop and foodcritic
 * Use batchresource instead of windows_batch
-* Bumps cookbook version to 2.0 as this could introduce breaking changes
+* Bumps cookbook version to 2.0
 
 ## 0.2.0
 
