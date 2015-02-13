@@ -16,7 +16,7 @@ Version 2.0.0+ of this cookbook requires Chef 11+
 * Windows Server 2012R2
 
 ## Usage
-In your recipe, you can use the `windows_firewall_rule` resource.  Currently, the only supported action is `:open`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.
+In your recipe, you can use the `windows_firewall_rule` resource.  Currently, the only supported action is `:create`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.
 
 This is a resource-only cookbook, and adding the default recipe to a node's runlist will have no effect.
 
@@ -26,7 +26,7 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 
 #### Actions
 
-:open - creates a firewall rule with the parameters supplied
+:create - creates a firewall rule with the parameters supplied
 
 #### Attribute Parameters
 

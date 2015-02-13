@@ -14,31 +14,17 @@ provisioner:
   name: chef_zero
 
 platforms:
-  # - name: windows_2008r2-chef11
-  #   driver_config:
-  #     box: win2k8r2
-  #     box_url: https://s3-us-west-2.amazonaws.com/chef-box-cutter/windows/virtualbox4.3.20/eval-win2008r2-datacenter-nocm-1.0.3.box  
-  #     gui: true
-  #   provisioner:
-  #     require_chef_omnibus: 11.16.4
-  # - name: windows_2008r2-chef12
-  #   driver_config:
-  #     box: win2k8r2
-  #     box_url: https://s3-us-west-2.amazonaws.com/chef-box-cutter/windows/virtualbox4.3.20/eval-win2008r2-datacenter-nocm-1.0.3.box  
-  #     gui: true
-  #   provisioner:
-  #     require_chef_omnibus: 12.0.3
   - name: windows_2012r2-chef11
     driver_config:
       box: win2k12r2
-      box_url: https://s3-us-west-2.amazonaws.com/chef-box-cutter/windows/virtualbox4.3.20/eval-win2012r2-datacenter-nocm-1.0.3.box  
+      box_url: # insert your own URL to box files here  
       gui: true
     provisioner:
       require_chef_omnibus: 11.16.4
   - name: windows_2012r2-chef12
     driver_config:
       box: win2k12r2
-      box_url: https://s3-us-west-2.amazonaws.com/chef-box-cutter/windows/virtualbox4.3.20/eval-win2012r2-datacenter-nocm-1.0.3.box  
+      box_url: # insert your own URL to box files here  
       gui: true
     provisioner:
       require_chef_omnibus: 12.0.3

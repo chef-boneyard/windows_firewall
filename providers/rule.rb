@@ -1,6 +1,6 @@
 include Chef::Mixin::ShellOut
 
-action :open do
+action :create do
   begin
     # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
     args = Hash.new
@@ -30,7 +30,7 @@ action :open do
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
       cmd = 'netsh advfirewall firewall add rule '
       args.each do | attribute, value |
-        cmd += "#{attribute}=#{value} " if value
+        cmd += "#{attribute}=#{value} " unless empty(value)
       end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
@@ -44,4 +44,8 @@ action :open do
   end
 
   new_resource.updated_by_last_action(true)
+end
+
+def empty(value)
+  !value || value == '' || value == '""'
 end

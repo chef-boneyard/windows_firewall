@@ -1,4 +1,5 @@
-actions :open
+actions :create
+default_action :create
 
 attribute :name, :kind_of => String, :name_attribute => true
 attribute :description, :kind_of => String, :default => 'Firewall rule'
@@ -13,8 +14,3 @@ attribute :profile, :kind_of => Symbol, :default => :any, :equal_to => [:public,
 attribute :program, :kind_of => String, :default => nil
 attribute :service, :kind_of => String, :default => nil
 attribute :interfacetype, :kind_of => Symbol, :default => :any, :equal_to => [:any, :wireless, :lan, :ras]
-
-def initialize(*args)
-  super
-  @action = :open
-end
