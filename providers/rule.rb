@@ -30,7 +30,7 @@ action :open do
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
       cmd = 'netsh advfirewall firewall add rule '
       args.each do | attribute, value |
-        cmd += "#{attribute}=#{value} " if value
+        cmd += "#{attribute}=#{value} " if !is_empty(value)
       end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
@@ -44,4 +44,9 @@ action :open do
   end
 
   new_resource.updated_by_last_action(true)
+end
+
+private
+def is_empty(value)
+  value && value != '' && value != '""'
 end
