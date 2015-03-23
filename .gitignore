@@ -161,3 +161,23 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+# Cookbook stuff
+.vagrant
+Berksfile.lock
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+
+# Bundler
+Gemfile.lock
+bin/*
+.bundle/*
+
+.kitchen/
+.kitchen.local.yml
+
+
