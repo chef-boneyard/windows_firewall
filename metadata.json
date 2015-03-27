@@ -1,29 +1,41 @@
 {
   "name": "windows_firewall",
-  "description": "Installs/Configures windows_firewall",
-  "long_description": "windows_firewall Cookbook\n====================\nThis cookbook configures windows firewall rules\n\nRequirements\n------------\nNone\n\nResources\n-----------------\n\nrule\n==================\n\n### Actions\n\n:open - opens the specified port\n\n### Attribute Parameters\n\n- attribute :port, :kind_of => Integer\n- attribute :name, :kind_of => String, :name_attribute => true\n- attribute :direction, :kind_of => Symbol, :default => :in, :equal_to => [:in, :out]\n- attribute :protocol, :kind_of => Symbol, :default => :TCP, :equal_to => [:TCP]\n- attribute :firewall_action, :kind_of => Symbol, :default => :allow, :equal_to => [:allow, :deny]\n\n### Examples\n\n    windows_firewall_rule 'Apache' do\n          port 8080\n          protocol :TCP\n          firewall_action :allow\n    end",
-  "maintainer": "YOUR_COMPANY_NAME",
-  "maintainer_email": "YOUR_EMAIL",
-  "license": "All rights reserved",
+  "description": "Configures firewall rules on Windows",
+  "long_description": "# windows_firewall Cookbook\n\nThis cookbook configures Windows firewall rules. \n\n# Requirements\nVersion 2.0.0+ of this cookbook requires Chef 11+\n\n## Platforms\n\n* Windows Vista\n* Windows 7\n* Windows 8\n* Windows Server 2008\n* Windows Server 2008R2\n* Windows Server 2012\n* Windows Server 2012R2\n\n## Usage\nIn your recipe, you can use the `windows_firewall_rule` resource.  Currently, the only supported action is `:create`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.\n\nThis is a resource-only cookbook, and adding the default recipe to a node's runlist will have no effect.\n\n## Resources\n\n### windows_firewall_rule\n\n#### Actions\n\n:create - creates a firewall rule with the parameters supplied\n\n#### Attribute Parameters\n\n- `name` Name attribute. The name of the firewall rule name to create.\n- `description` The firewall rule description. Optional.\n- `localip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-'\n- `localport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } \n- `remoteip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-''\n- `remoteport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } \n- `dir` Direction of the rule. Can be in or out. Default is in.\n- `protocol` Can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } \n- `firewall_action` Can be allow, block, or bypass. Default is 'allow'\n- `profile` Can be public, private, domain, or any\n- `program` The path to the program.\n- `service` The short name of the service, or 'any'\n- `interface_type` Can be any, wireless, lan, or ras\n\n\n#### Examples\n\n```\n    windows_firewall_rule 'Apache' do\n          localport '8080'\n          protocol :TCP\n          firewall_action :allow\n    end\n```\n\n## License & Authors\n\nAuthor:: Matt Clifton (spartacus003@hotmail.com)\nCopyright:: 2013-2015 Matt Clifton\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "maintainer": "Matt Clifton",
+  "maintainer_email": "spartacus003@hotmail.com",
+  "license": "Apache 2.0",
   "platforms": {
+    "windows": ">= 0.0.0"
   },
   "dependencies": {
+
   },
   "recommendations": {
+
   },
   "suggestions": {
+
   },
   "conflicting": {
+
   },
   "providing": {
+
   },
   "replacing": {
+
   },
   "attributes": {
+
   },
   "groupings": {
+
   },
   "recipes": {
+
   },
-  "version": "0.1.0"
+  "version": "2.0.0",
+  "source_url": "",
+  "issues_url": ""
 }
