@@ -50,7 +50,7 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 ```
     windows_firewall_rule 'Apache' do
           localport '8080'
-          protocol :TCP
+          protocol 'TCP'
           firewall_action :allow
     end
 ```

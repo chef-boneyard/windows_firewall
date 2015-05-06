@@ -8,7 +8,7 @@ attribute :localport, :kind_of => String, :default => nil
 attribute :remoteip, :kind_of => String, :default => nil
 attribute :remoteport, :kind_of => String, :default => nil
 attribute :dir, :kind_of => Symbol, :default => :in, :equal_to => [:in, :out]
-attribute :protocol, :kind_of => Symbol, :default => :TCP, :equal_to => [:TCP]
+attribute :protocol, :kind_of => String, :default => 'TCP'
 attribute :firewall_action, :kind_of => Symbol, :default => :allow, :equal_to => [:allow, :deny]
 attribute :profile, :kind_of => Symbol, :default => :any, :equal_to => [:public, :private, :domain, :any]
 attribute :program, :kind_of => String, :default => nil
