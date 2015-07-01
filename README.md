@@ -2,6 +2,18 @@
 
 This cookbook configures Windows firewall rules. 
 
+# **3.0 Breaking Changes**
+
+The protocol attribute was changed from a symbol to a string. If you were explicitly referencing this attribute
+in your recipes, you will need to update all usages to a string, or remove each usage to rely on the default value ('TCP'):
+
+```
+    windows_firewall_rule 'Apache' do
+          protocol 'TCP' # was protocol :TCP
+          ...
+    end
+```
+
 # Requirements
 Version 2.0.0+ of this cookbook requires Chef 11+
 
@@ -33,11 +45,11 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 - `name` Name attribute. The name of the firewall rule name to create.
 - `description` The firewall rule description. Optional.
 - `localip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-'
-- `localport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+- `localport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] }
 - `remoteip` Can be 'any', a specific address, a subnet in CIDR or ip/mask notation, or a range separated by '-''
-- `remoteport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] } 
+- `remoteport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] }
 - `dir` Direction of the rule. Can be in or out. Default is in.
-- `protocol` Can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp } 
+- `protocol` Can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp }
 - `firewall_action` Can be allow, block, or bypass. Default is 'allow'
 - `profile` Can be public, private, domain, or any
 - `program` The path to the program.
