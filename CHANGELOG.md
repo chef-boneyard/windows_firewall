@@ -2,6 +2,21 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 3.0.1
+
+* Fix issue with incorrect use of "deny" as a firewall action. Resource now validates for "allow", "block", or "bypass"
+
+## 3.0.0
+
+BREAKING CHANGES
+The protocol attribute was changed from a symbol to a string. If you were explicitly referencing this attribute in your recipes, you will need to update all usages to a string, or remove each usage to rely on the default value ('TCP'):
+```
+    windows_firewall_rule 'Apache' do
+          protocol 'TCP' # was protocol :TCP
+          ...
+    end
+```
+
 ## 2.0.0
 
 BREAKING CHANGES
