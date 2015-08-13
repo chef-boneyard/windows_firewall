@@ -1,6 +1,6 @@
 # windows_firewall Cookbook
 
-This cookbook configures Windows firewall rules. 
+This cookbook configures Windows firewall rules.
 
 # **3.0 Breaking Changes**
 
@@ -69,7 +69,9 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 
 ## License & Authors
 
-Author:: Matt Clifton (spartacus003@hotmail.com)
+* Author:: Matt Clifton (spartacus003@hotmail.com)
+* Author:: Matt Stratton (matt.stratton@gmail.com)
+
 Copyright:: 2013-2015 Matt Clifton
 
 Licensed under the Apache License, Version 2.0 (the "License");

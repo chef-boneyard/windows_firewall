@@ -10,3 +10,11 @@ windows_firewall_rule 'Apache' do
   program 'c:\program files\test.exe'
   localip '192.168.1.1'
 end
+
+windows_firewall_rule 'Disable WinRM over HTTP' do
+  localport '5985'
+  protocol 'TCP'
+  firewall_action :block
+  program 'c:\program files\test.exe'
+  localip '192.168.1.1'
+end
