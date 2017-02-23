@@ -22,12 +22,10 @@ action :create do
     args['service'] = @new_resource.service
     args['interfacetype'] = @new_resource.interfacetype
 
-    # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
-    current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
+    current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\" | find \"#{args['protocol']}\"")
 
-    if (current_rule.stdout.strip == 'No rules match the specified criteria.')
-      # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
+    if current_rule.stdout.strip == ''
       cmd = 'netsh advfirewall firewall add rule '
       args.each do | attribute, value |
         cmd += "#{attribute}=#{value} " unless empty(value)
@@ -38,11 +36,11 @@ action :create do
       batch cmd do
         code cmd
       end
+
     else
       Chef::Log.info("Firewall rule \"#{name}\" already exists.")
     end
   end
-
   new_resource.updated_by_last_action(true)
 end
 
