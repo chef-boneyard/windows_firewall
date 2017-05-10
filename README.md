@@ -50,7 +50,7 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 - `remoteport` Can be 'any', an integer or one of {  rpc | rpc-epmap | iphttps | teredo | [ ,... ] }
 - `dir` Direction of the rule. Can be in or out. Default is in.
 - `protocol` Can by 'any', an integer, or one of { | icmpv4 | icmpv6 | icmpv4:type,code | icmpv6:type,code | tcp | udp }
-- `firewall_action` Can be allow, block, or bypass. Default is 'allow'
+- `firewall_action` Can be `:allow` or `:deny`. Default is `:allow`.
 - `profile` Can be public, private, domain, or any
 - `program` The path to the program.
 - `service` The short name of the service, or 'any'
