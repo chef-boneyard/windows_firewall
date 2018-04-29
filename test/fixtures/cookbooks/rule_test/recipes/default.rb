@@ -1,7 +1,7 @@
 #
 # Cookbook Name:: rule_test
 # Recipe:: default
-# tests the firewall LWRP
+# tests the firewall resource
 
 windows_firewall_rule 'Apache' do
   localport '8080'
