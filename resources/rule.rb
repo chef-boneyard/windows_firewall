@@ -29,33 +29,37 @@ property :program, String
 property :service, String
 property :interfacetype, Symbol, default: :any, equal_to: [:any, :wireless, :lan, :ras]
 
+load_current_value do
+  current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{rule_name}\"")
+
+  current_value_does_not_exist! if current_rule.stdout.strip == 'No rules match the specified criteria.'
+end
+
 action :create do
-  begin
-    # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
-    args = {}
+  # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
+  args = {}
 
-    name = new_resource.rule_name
-    desc = new_resource.description
-    program = new_resource.program
-    args['name'] = "\"#{name}\""
-    args['description'] = "\"#{desc}\""
-    args['localip'] = new_resource.localip
-    args['localport'] = new_resource.localport
-    args['remoteip'] = new_resource.remoteip
-    args['remoteport'] = new_resource.remoteport
-    args['dir'] = new_resource.dir
-    args['protocol'] = new_resource.protocol
-    args['action'] = new_resource.firewall_action
-    args['profile'] = new_resource.profile
-    args['program'] = "\"#{program}\""
-    args['service'] = new_resource.service
-    args['interfacetype'] = new_resource.interfacetype
+  name = new_resource.rule_name
+  desc = new_resource.description
+  program = new_resource.program
+  args['name'] = "\"#{name}\""
+  args['description'] = "\"#{desc}\""
+  args['localip'] = new_resource.localip
+  args['localport'] = new_resource.localport
+  args['remoteip'] = new_resource.remoteip
+  args['remoteport'] = new_resource.remoteport
+  args['dir'] = new_resource.dir
+  args['protocol'] = new_resource.protocol
+  args['action'] = new_resource.firewall_action
+  args['profile'] = new_resource.profile
+  args['program'] = "\"#{program}\""
+  args['service'] = new_resource.service
+  args['interfacetype'] = new_resource.interfacetype
 
-    # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
+  # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
-    current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{name}\"")
-
-    if current_rule.stdout.strip == 'No rules match the specified criteria.'
+  if current_value.nil?
+    converge_by("create firewall rule #{name}") do
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
       cmd = 'netsh advfirewall firewall add rule '
       args.each do |attribute, value|
@@ -63,13 +67,10 @@ action :create do
       end
 
       Chef::Log.debug("Running firewall command: #{cmd}")
-
-      batch cmd do
-        code cmd
-      end
-    else
-      Chef::Log.info("Firewall rule \"#{name}\" already exists.")
+      shell_out!(cmd)
     end
+  else
+    Chef::Log.info("Firewall rule \"#{name}\" already exists. Skipping.")
   end
 end
 
