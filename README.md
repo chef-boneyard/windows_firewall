@@ -62,11 +62,20 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 #### Examples
 
 ```ruby
-    windows_firewall_rule 'Apache' do
-          localport '8080'
-          protocol 'TCP'
-          firewall_action :allow
-    end
+  windows_firewall_rule 'Apache' do
+    localport '8080'
+    protocol 'TCP'
+    firewall_action :allow
+  end
+```
+
+```ruby
+  windows_firewall_rule 'Enable SSH Access' do
+    rule_name 'ssh'
+    localport '22'
+    protocol 'TCP'
+    firewall_action :allow
+  end
 ```
 
 ## License & Authors
