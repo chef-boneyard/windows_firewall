@@ -1,15 +1,15 @@
 property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
-property :localip, String, default: nil
-property :localport, String, default: nil
-property :remoteip, String, default: nil
-property :remoteport, String, default: nil
+property :localip, String
+property :localport, String
+property :remoteip, String
+property :remoteport, String
 property :dir, Symbol, default: :in, equal_to: [:in, :out]
 property :protocol, String, default: 'TCP'
 property :firewall_action, Symbol, default: :allow, equal_to: [:allow, :block, :bypass]
 property :profile, Symbol, default: :any, equal_to: [:public, :private, :domain, :any]
-property :program, String, default: nil
-property :service, String, default: nil
+property :program, String
+property :service, String
 property :interfacetype, Symbol, default: :any, equal_to: [:any, :wireless, :lan, :ras]
 
 action :create do
