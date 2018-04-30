@@ -74,6 +74,16 @@ action :create do
   end
 end
 
+action :delete do
+  if current_value
+    converge_by("delete firewall rule #{new_resource.rule_name}") do
+      shell_out!("netsh advfirewall firewall delete rule name=\"#{new_resource.rule_name}\"")
+    end
+  else
+    Chef::Log.info("Firewall rule \"#{new_resource.rule_name}\" doesn't exist. Skipping.")
+  end
+end
+
 def empty(value)
   !value || value == '' || value == '""'
 end

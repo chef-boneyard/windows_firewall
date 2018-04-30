@@ -78,6 +78,13 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
   end
 ```
 
+```ruby
+windows_firewall_rule 'Remove SSH Access' do
+  rule_name 'ssh'
+  action :delete
+end
+```
+
 ## License & Authors
 
 - Author:: Matt Clifton (spartacus003@hotmail.com)

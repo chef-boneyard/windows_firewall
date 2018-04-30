@@ -18,3 +18,15 @@ windows_firewall_rule 'Disable WinRM over HTTP' do
   program 'c:\program files\test.exe'
   localip '192.168.1.1'
 end
+
+windows_firewall_rule 'Enable SSH Access' do
+  rule_name 'ssh'
+  localport '22'
+  protocol 'TCP'
+  firewall_action :allow
+end
+
+windows_firewall_rule 'Remove SSH Access' do
+  rule_name 'ssh'
+  action :delete
+end
