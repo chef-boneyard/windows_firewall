@@ -1,5 +1,7 @@
 # windows_firewall Cookbook
 
+[![Cookbook Version](https://img.shields.io/cookbook/v/windows_firewall.svg)](https://supermarket.chef.io/cookbooks/windows_firewall)
+
 This cookbook configures Windows firewall rules.
 
 # Requirements
