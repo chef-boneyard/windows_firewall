@@ -2,17 +2,6 @@
 
 This cookbook configures Windows firewall rules.
 
-## **3.0 Breaking Changes**
-
-The protocol attribute was changed from a symbol to a string. If you were explicitly referencing this attribute in your recipes, you will need to update all usages to a string, or remove each usage to rely on the default value ('TCP'):
-
-```
-    windows_firewall_rule 'Apache' do
-          protocol 'TCP' # was protocol :TCP
-          ...
-    end
-```
-
 # Requirements
 
 ## Chef
