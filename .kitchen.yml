@@ -9,26 +9,35 @@ driver:
 
 transport:
   name: winrm
+  elevated: true
 
 provisioner:
   name: chef_zero
+  deprecations_as_errors: true
 
 platforms:
-  - name: windows_2012r2-chef11
-    driver_config:
-      box: win2k12r2
-      box_url: # insert your own URL to box files here
-      gui: true
-    provisioner:
-      require_chef_omnibus: 11.16.4
   - name: windows_2012r2-chef12
     driver_config:
-      box: win2k12r2
-      box_url: # insert your own URL to box files here
+      gui: true
+      box: mwrock/Windows2012R2
       gui: true
     provisioner:
-      require_chef_omnibus: 12.4.1
-
+      require_chef_omnibus: 12.7.2
+  - name: windows_2012r2
+    driver_config:
+      gui: true
+      box: mwrock/Windows2012R2
+  - name: windows_2016-chef12
+    driver_config:
+      gui: true
+      box: mwrock/Windows2016
+      gui: true
+    provisioner:
+      require_chef_omnibus: 12.7.2
+  - name: windows_2016
+    driver_config:
+      gui: true
+      box: mwrock/Windows2016
 suites:
   - name: default
     run_list:
