@@ -2,7 +2,7 @@
 
 This cookbook configures Windows firewall rules.
 
-# **3.0 Breaking Changes**
+## **3.0 Breaking Changes**
 
 The protocol attribute was changed from a symbol to a string. If you were explicitly referencing this attribute in your recipes, you will need to update all usages to a string, or remove each usage to rely on the default value ('TCP'):
 
@@ -89,8 +89,12 @@ end
 
 - Author:: Matt Clifton (spartacus003@hotmail.com)
 - Author:: Matt Stratton (matt.stratton@gmail.com)
+- Author:: Tim Smith (tsmith@chef.io)
 
+```text
 Copyright:: 2013-2015 Matt Clifton
+Copyright:: 2018 Chef Software, Inc.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -103,3 +107,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```

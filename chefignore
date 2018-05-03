@@ -82,11 +82,6 @@ Berksfile.lock
 cookbooks/*
 tmp
 
-# Policyfile #
-##############
-Policyfile.rb
-Policyfile.lock.json
-
 # Cookbooks #
 #############
 CONTRIBUTING*
