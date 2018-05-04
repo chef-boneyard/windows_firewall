@@ -58,7 +58,7 @@ action :create do
 
   # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
 
-  if current_value.nil?
+  if current_resource.nil?
     converge_by("create firewall rule #{name}") do
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
       cmd = 'netsh advfirewall firewall add rule '
@@ -75,7 +75,7 @@ action :create do
 end
 
 action :delete do
-  if current_value
+  if current_resource
     converge_by("delete firewall rule #{new_resource.rule_name}") do
       shell_out!("netsh advfirewall firewall delete rule name=\"#{new_resource.rule_name}\"")
     end
