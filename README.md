@@ -32,7 +32,8 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 
 #### Actions
 
-:create - creates a firewall rule with the parameters supplied
+- `:create` - creates a firewall rule
+- `:delete` - deleted a firewall rule
 
 #### properties
 
