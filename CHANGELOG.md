@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 4.0.1 (2018-05-04)
+
+- Fix failures loading current state
+
 ## 4.0.0 (05-03-2018)
 
 ### Breaking Changes
