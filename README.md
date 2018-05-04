@@ -22,7 +22,7 @@ This cookbook configures Windows firewall rules.
 
 ## Usage
 
-In your recipe, you can use the `windows_firewall_rule` resource. Currently, the only supported action is `:create`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.
+In your recipe, you can use the `windows_firewall_rule` resource. Currently, the only supported actions are `:create` and `:delete`. Attribute defaults match the netsh advfirewall defaults if they are required by netsh advfirewall, otherwise they are set to 'nil'.
 
 This is a resource-only cookbook, and adding the default recipe to a node's runlist will have no effect.
 
@@ -33,6 +33,7 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 #### Actions
 
 :create - creates a firewall rule with the parameters supplied
+:delete - deletes a firewall rule
 
 #### properties
 
