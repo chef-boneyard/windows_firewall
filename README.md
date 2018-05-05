@@ -49,7 +49,7 @@ This is a resource-only cookbook, and adding the default recipe to a node's runl
 - `profile` Can be public, private, domain, or any
 - `program` The path to the program.
 - `service` The short name of the service, or 'any'
-- `interface_type` Can be any, wireless, lan, or ras
+- `interfacetype` Can be any, wireless, lan, or ras
 
 #### Examples
 
