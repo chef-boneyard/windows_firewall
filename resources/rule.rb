@@ -58,11 +58,13 @@ action :delete do
 end
 
 action_class do
+  # build the command to create a firewall rule based on new_resource values
+  # @return [String] firewall create command
   def firewall_create_command
     # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
     args = {}
-    args['name'] = "\"#{new_resource.rule_name}\""
-    args['description'] = "\"#{new_resource.description}\""
+    args['name'] = escaped_quote(new_resource.rule_name)
+    args['description'] = escaped_quote(new_resource.description)
     args['localip'] = new_resource.localip
     args['localport'] = new_resource.localport
     args['remoteip'] = new_resource.remoteip
@@ -71,7 +73,7 @@ action_class do
     args['protocol'] = new_resource.protocol
     args['action'] = new_resource.firewall_action
     args['profile'] = new_resource.profile
-    args['program'] = "\"#{new_resource.program}\""
+    args['program'] = escaped_quote(new_resource.program)
     args['service'] = new_resource.service
     args['interfacetype'] = new_resource.interfacetype
 
@@ -84,6 +86,11 @@ action_class do
     cmd
   end
 
+  # @param [String] val the value to wrap in quotes
+  # @return [String] Double quote wrapped value
+  def escaped_quote(val)
+    "\"#{val}\""
+  end
   def empty(value)
     !value || value == '' || value == '""'
   end
