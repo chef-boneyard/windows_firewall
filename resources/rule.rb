@@ -37,41 +37,13 @@ end
 
 action :create do
   if current_resource.nil?
-
-    # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
-    args = {}
-
-    name = new_resource.rule_name
-    desc = new_resource.description
-    program = new_resource.program
-    args['name'] = "\"#{name}\""
-    args['description'] = "\"#{desc}\""
-    args['localip'] = new_resource.localip
-    args['localport'] = new_resource.localport
-    args['remoteip'] = new_resource.remoteip
-    args['remoteport'] = new_resource.remoteport
-    args['dir'] = new_resource.dir
-    args['protocol'] = new_resource.protocol
-    args['action'] = new_resource.firewall_action
-    args['profile'] = new_resource.profile
-    args['program'] = "\"#{program}\""
-    args['service'] = new_resource.service
-    args['interfacetype'] = new_resource.interfacetype
-
-    # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
-
-    converge_by("create firewall rule #{name}") do
-      # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
-      cmd = 'netsh advfirewall firewall add rule '
-      args.each do |attribute, value|
-        cmd += "#{attribute}=#{value} " unless empty(value)
-      end
-
+    converge_by("create firewall rule #{new_resource.rule_name}") do
+      cmd = firewall_create_command
       Chef::Log.debug("Running firewall command: #{cmd}")
       shell_out!(cmd)
     end
   else
-    Chef::Log.info("Firewall rule \"#{name}\" already exists. Skipping.")
+    Chef::Log.info("Firewall rule \"#{new_resource.rule_name}\" already exists. Skipping.")
   end
 end
 
@@ -85,6 +57,37 @@ action :delete do
   end
 end
 
-def empty(value)
-  !value || value == '' || value == '""'
+action_class do
+  def firewall_create_command
+    # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
+    args = {}
+
+    desc = new_resource.description
+    program = new_resource.program
+    args['name'] = "\"#{new_resource.rule_name}\""
+    args['description'] = "\"#{desc}\""
+    args['localip'] = new_resource.localip
+    args['localport'] = new_resource.localport
+    args['remoteip'] = new_resource.remoteip
+    args['remoteport'] = new_resource.remoteport
+    args['dir'] = new_resource.dir
+    args['protocol'] = new_resource.protocol
+    args['action'] = new_resource.firewall_action
+    args['profile'] = new_resource.profile
+    args['program'] = "\"#{program}\""
+    args['service'] = new_resource.service
+    args['interfacetype'] = new_resource.interfacetype
+
+    # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
+    cmd = 'netsh advfirewall firewall add rule '
+    args.each do |attribute, value|
+      cmd += "#{attribute}=#{value} " unless empty(value)
+    end
+
+    cmd
+  end
+
+  def empty(value)
+    !value || value == '' || value == '""'
+  end
 end
