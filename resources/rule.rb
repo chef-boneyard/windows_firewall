@@ -36,29 +36,30 @@ load_current_value do
 end
 
 action :create do
-  # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
-  args = {}
-
-  name = new_resource.rule_name
-  desc = new_resource.description
-  program = new_resource.program
-  args['name'] = "\"#{name}\""
-  args['description'] = "\"#{desc}\""
-  args['localip'] = new_resource.localip
-  args['localport'] = new_resource.localport
-  args['remoteip'] = new_resource.remoteip
-  args['remoteport'] = new_resource.remoteport
-  args['dir'] = new_resource.dir
-  args['protocol'] = new_resource.protocol
-  args['action'] = new_resource.firewall_action
-  args['profile'] = new_resource.profile
-  args['program'] = "\"#{program}\""
-  args['service'] = new_resource.service
-  args['interfacetype'] = new_resource.interfacetype
-
-  # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
-
   if current_resource.nil?
+
+    # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
+    args = {}
+
+    name = new_resource.rule_name
+    desc = new_resource.description
+    program = new_resource.program
+    args['name'] = "\"#{name}\""
+    args['description'] = "\"#{desc}\""
+    args['localip'] = new_resource.localip
+    args['localport'] = new_resource.localport
+    args['remoteip'] = new_resource.remoteip
+    args['remoteport'] = new_resource.remoteport
+    args['dir'] = new_resource.dir
+    args['protocol'] = new_resource.protocol
+    args['action'] = new_resource.firewall_action
+    args['profile'] = new_resource.profile
+    args['program'] = "\"#{program}\""
+    args['service'] = new_resource.service
+    args['interfacetype'] = new_resource.interfacetype
+
+    # cmdargs = args.map { |k, v| "#{k}=#{v}" }.join(' ')
+
     converge_by("create firewall rule #{name}") do
       # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
       cmd = 'netsh advfirewall firewall add rule '
