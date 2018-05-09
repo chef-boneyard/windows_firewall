@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 4.0.2 (2018-05-09)
+
+- Updated the readme to match resource actions / properties
+- Skipped building out the command line options unless we actually need to run a command in order to speed up no-op runs
+
 ## 4.0.1 (2018-05-04)
 
 - Fix failures loading current state

@@ -7,5 +7,5 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/chef-cookbooks/windows_firewall'
 issues_url       'https://github.com/chef-cookbooks/windows_firewall/issues'
 supports         'windows'
-version          '4.0.1'
+version          '4.0.2'
 chef_version     '>= 12.7' if respond_to?(:chef_version)
