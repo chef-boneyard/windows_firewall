@@ -91,7 +91,10 @@ action_class do
   def escaped_quote(val)
     "\"#{val}\""
   end
+
+  # see if the value is nil, empty, or empty double quotes
+  # @return [Boolean]
   def empty(value)
-    !value || value == '' || value == '""'
+    value.nil? || value.empty? || value == '""'
   end
 end
