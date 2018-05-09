@@ -61,11 +61,8 @@ action_class do
   def firewall_create_command
     # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
     args = {}
-
-    desc = new_resource.description
-    program = new_resource.program
     args['name'] = "\"#{new_resource.rule_name}\""
-    args['description'] = "\"#{desc}\""
+    args['description'] = "\"#{new_resource.description}\""
     args['localip'] = new_resource.localip
     args['localport'] = new_resource.localport
     args['remoteip'] = new_resource.remoteip
@@ -74,14 +71,14 @@ action_class do
     args['protocol'] = new_resource.protocol
     args['action'] = new_resource.firewall_action
     args['profile'] = new_resource.profile
-    args['program'] = "\"#{program}\""
+    args['program'] = "\"#{new_resource.program}\""
     args['service'] = new_resource.service
     args['interfacetype'] = new_resource.interfacetype
 
     # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
-    cmd = 'netsh advfirewall firewall add rule '
+    cmd = 'netsh advfirewall firewall add rule'
     args.each do |attribute, value|
-      cmd += "#{attribute}=#{value} " unless empty(value)
+      cmd += " #{attribute}=#{value}" unless empty(value)
     end
 
     cmd
