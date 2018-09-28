@@ -30,7 +30,7 @@ property :service, String
 property :interfacetype, Symbol, default: :any, equal_to: [:any, :wireless, :lan, :ras]
 
 load_current_value do
-  current_rule = shell_out("netsh advfirewall firewall show rule name=\"#{rule_name}\"")
+  current_rule = shell_out("chcp 437 >null 2>&1 && cmd.exe /c netsh advfirewall firewall show rule name=\"#{rule_name}\"")
 
   current_value_does_not_exist! if current_rule.stdout.strip == 'No rules match the specified criteria.'
 end
