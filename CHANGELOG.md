@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 4.1.0 (2018-09-29)
+
+- Avoid extra spaces in the create shellout
+- Add a helper to double quote values for the command line
+- Make it more obvious how we're checking for empty values
+- Add support for running on localized versions of Windows
+
 ## 4.0.2 (2018-05-09)
 
 - Updated the readme to match resource actions / properties
