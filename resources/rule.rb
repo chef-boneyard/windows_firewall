@@ -15,22 +15,24 @@
 # limitations under the License.
 #
 
+require 'chef/json_compat'
+
 property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
 property :local_address, String
 property :local_port, String
 property :remote_address, String
 property :remote_port, String
-property :direction, Symbol, default: :inbound, equal_to: [:inbound, :outbound],
+property :direction, [Symbol, String], default: :inbound, equal_to: [:inbound, :outbound],
           coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
-property :firewall_action, Symbol, default: :allow, equal_to: [:allow, :block, :notconfigured],
+property :firewall_action, [Symbol, String], default: :allow, equal_to: [:allow, :block, :notconfigured],
           coerce: proc { |f| f.is_a?(String) ? f.downcase.to_sym : f }
-property :profile, Symbol, default: :any, equal_to: [:public, :private, :domain, :any, :notapplicable],
+property :profile, [Symbol, String], default: :any, equal_to: [:public, :private, :domain, :any, :notapplicable],
           coerce: proc { |p| p.is_a?(String) ? p.downcase.to_sym : p }
 property :program, String
 property :service, String
-property :interface_type, Symbol, default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
+property :interface_type, [Symbol, String], default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
           coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
 
 load_current_value do
