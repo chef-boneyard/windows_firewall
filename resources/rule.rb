@@ -17,40 +17,62 @@
 
 property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
-property :localip, String
-property :localport, String
-property :remoteip, String
-property :remoteport, String
-property :dir, Symbol, default: :in, equal_to: [:in, :out]
+property :local_address, String
+property :local_port, String
+property :remote_address, String
+property :remote_port, String
+property :direction, Symbol, default: :inbound, equal_to: [:inbound, :outbound],
+          coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
-property :firewall_action, Symbol, default: :allow, equal_to: [:allow, :block, :bypass]
-property :profile, Symbol, default: :any, equal_to: [:public, :private, :domain, :any]
+property :firewall_action, Symbol, default: :allow, equal_to: [:allow, :block, :notconfigured],
+          coerce: proc { |f| f.is_a?(String) ? f.downcase.to_sym : f }
+property :profile, Symbol, default: :any, equal_to: [:public, :private, :domain, :any, :notapplicable],
+          coerce: proc { |p| p.is_a?(String) ? p.downcase.to_sym : p }
 property :program, String
 property :service, String
-property :interfacetype, Symbol, default: :any, equal_to: [:any, :wireless, :lan, :ras]
+property :interface_type, Symbol, default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
+          coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
 
 load_current_value do
-  current_rule = shell_out("chcp 437 >null 2>&1 && cmd.exe /c netsh advfirewall firewall show rule name=\"#{rule_name}\"")
-
-  current_value_does_not_exist! if current_rule.stdout.strip == 'No rules match the specified criteria.'
+  load_state_cmd = load_firewall_state(rule_name)
+  output = powershell_out(load_state_cmd)
+  if output.stdout.empty?
+    current_value_does_not_exist!
+  else
+    state = Chef::JSONCompat.from_json(output.stdout)
+  end
+  local_address state["local_address"]
+  local_port state["local_port"]
+  remote_address state["remote_address"]
+  remote_port state["remote_port"]
+  direction state["direction"]
+  protocol state["protocol"]
+  firewall_action state["firewall_action"]
+  profile state["profile"]
+  program state["program"]
+  service state["service"]
+  interface_type state["interface_type"]
 end
 
 action :create do
-  if current_resource.nil?
-    converge_by("create firewall rule #{new_resource.rule_name}") do
-      cmd = firewall_create_command
-      Chef::Log.debug("Running firewall command: #{cmd}")
-      shell_out!(cmd)
+  if current_resource
+    converge_if_changed :rule_name, :local_address, :local_port, :remote_address, :remote_port, :direction,
+                        :protocol, :firewall_action, :profile, :program, :service, :interface_type do
+      cmd = firewall_command("Set")
+      powershell_out!(cmd)
     end
   else
-    Chef::Log.info("Firewall rule \"#{new_resource.rule_name}\" already exists. Skipping.")
+    converge_by("create firewall rule #{new_resource.rule_name}") do
+      cmd = firewall_command("New")
+      powershell_out!(cmd)
+    end
   end
 end
 
 action :delete do
   if current_resource
     converge_by("delete firewall rule #{new_resource.rule_name}") do
-      shell_out!("netsh advfirewall firewall delete rule name=\"#{new_resource.rule_name}\"")
+      powershell_out!("Remove-NetFirewallRule -Name '#{new_resource.rule_name}'")
     end
   else
     Chef::Log.info("Firewall rule \"#{new_resource.rule_name}\" doesn't exist. Skipping.")
@@ -60,41 +82,52 @@ end
 action_class do
   # build the command to create a firewall rule based on new_resource values
   # @return [String] firewall create command
-  def firewall_create_command
-    # netsh advfirewall firewall set rule name="SSH" dir=in action=allow protocol=TCP localport=22
-    args = {}
-    args['name'] = escaped_quote(new_resource.rule_name)
-    args['description'] = escaped_quote(new_resource.description)
-    args['localip'] = new_resource.localip
-    args['localport'] = new_resource.localport
-    args['remoteip'] = new_resource.remoteip
-    args['remoteport'] = new_resource.remoteport
-    args['dir'] = new_resource.dir
-    args['protocol'] = new_resource.protocol
-    args['action'] = new_resource.firewall_action
-    args['profile'] = new_resource.profile
-    args['program'] = escaped_quote(new_resource.program)
-    args['service'] = new_resource.service
-    args['interfacetype'] = new_resource.interfacetype
-
-    # cmd = "netsh advfirewall firewall add rule #{cmdargs}"
-    cmd = 'netsh advfirewall firewall add rule'
-    args.each do |attribute, value|
-      cmd += " #{attribute}=#{value}" unless empty(value)
-    end
+  def firewall_command(cmdlet_type)
+    cmd = "#{cmdlet_type}-NetFirewallRule -Name '#{new_resource.rule_name}'"
+    cmd << " -DisplayName '#{new_resource.rule_name}'" if cmdlet_type == "New"
+    cmd << " -Description '#{new_resource.description}'" if new_resource.description
+    cmd << " -LocalAddress '#{new_resource.local_address}'" if new_resource.local_address
+    cmd << " -LocalPort '#{new_resource.local_port}'" if new_resource.local_port
+    cmd << " -RemoteAddress '#{new_resource.remote_address}'" if new_resource.remote_address
+    cmd << " -RemotePort '#{new_resource.remote_port}'" if new_resource.remote_port
+    cmd << " -Direction '#{new_resource.direction}'" if new_resource.direction
+    cmd << " -Protocol '#{new_resource.protocol}'" if new_resource.protocol
+    cmd << " -Action '#{new_resource.firewall_action}'" if new_resource.firewall_action
+    cmd << " -Profile '#{new_resource.profile}'" if new_resource.profile
+    cmd << " -Program '#{new_resource.program}'" if new_resource.program
+    cmd << " -Service '#{new_resource.service}'" if new_resource.service
+    cmd << " -InterfaceType '#{new_resource.interface_type}'" if new_resource.interface_type
 
     cmd
   end
+end
 
-  # @param [String] val the value to wrap in quotes
-  # @return [String] Double quote wrapped value
-  def escaped_quote(val)
-    "\"#{val}\""
-  end
+private
 
-  # see if the value is nil, empty, or empty double quotes
-  # @return [Boolean]
-  def empty(value)
-    value.nil? || value.empty? || value == '""'
-  end
+# build the command to load the current resource
+# # @return [String] current firewall state
+def load_firewall_state(rule_name)
+  <<-EOH
+    $rule = Get-NetFirewallRule -Name '#{rule_name}'
+    $addressFilter = $rule | Get-NetFirewallAddressFilter
+    $portFilter = $rule | Get-NetFirewallPortFilter
+    $applicationFilter = $rule | Get-NetFirewallApplicationFilter
+    $serviceFilter = $rule | Get-NetFirewallServiceFilter
+    $interfaceTypeFilter = $rule | Get-NetFirewallInterfaceTypeFilter
+    ([PSCustomObject]@{
+      rule_name = $rule.Name
+      description = $rule.Description
+      local_address = $addressFilter.LocalAddress
+      local_port = $portFilter.LocalPort
+      remote_address = $addressFilter.RemoteAddress
+      remote_port = $portFilter.RemotePort
+      direction = $rule.Direction.ToString()
+      protocol = $portFilter.Protocol
+      firewall_action = $rule.Action.ToString()
+      profile = $rule.Profile.ToString()
+      program = $applicationFilter.Program
+      service = $serviceFilter.Service
+      interface_type = $interfaceTypeFilter.InterfaceType.ToString()
+    }) | ConvertTo-Json
+  EOH
 end
