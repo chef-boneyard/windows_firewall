@@ -2,6 +2,18 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 5.0.0 (2018-10-31)
+
+- The windows_firewall_entry resource has been mostly rewritten to use PowerShell and provide full idempotency. This resolves a large number of outstainding issues with the resource and gets it ready for inclusion in the chef-client itself
+- This cookbook now requires Chef 13.0 or later
+- AppVeyor testing of all PRs has been enabled
+- Multiple property names have been changed in this new version. The existing names will continue to work, but in chef-client 14.7 they will begin to throw deprecation warnings
+  - localip -> local_address
+  - remoteip -> remote_address
+  - localport -> local_port
+  - remoteport -> remote_port
+  - interfacetype -> interface_type
+
 ## 4.1.0 (2018-09-29)
 
 - Avoid extra spaces in the create shellout
