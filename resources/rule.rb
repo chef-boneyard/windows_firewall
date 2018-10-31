@@ -24,16 +24,16 @@ property :local_port, String
 property :remote_address, String
 property :remote_port, String
 property :direction, [Symbol, String], default: :inbound, equal_to: [:inbound, :outbound],
-          coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
+                                       coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
 property :firewall_action, [Symbol, String], default: :allow, equal_to: [:allow, :block, :notconfigured],
-          coerce: proc { |f| f.is_a?(String) ? f.downcase.to_sym : f }
+                                             coerce: proc { |f| f.is_a?(String) ? f.downcase.to_sym : f }
 property :profile, [Symbol, String], default: :any, equal_to: [:public, :private, :domain, :any, :notapplicable],
-          coerce: proc { |p| p.is_a?(String) ? p.downcase.to_sym : p }
+                                     coerce: proc { |p| p.is_a?(String) ? p.downcase.to_sym : p }
 property :program, String
 property :service, String
 property :interface_type, [Symbol, String], default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
-          coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
+                                            coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
 
 load_current_value do
   load_state_cmd = load_firewall_state(rule_name)
@@ -43,29 +43,29 @@ load_current_value do
   else
     state = Chef::JSONCompat.from_json(output.stdout)
   end
-  local_address state["local_address"]
-  local_port state["local_port"]
-  remote_address state["remote_address"]
-  remote_port state["remote_port"]
-  direction state["direction"]
-  protocol state["protocol"]
-  firewall_action state["firewall_action"]
-  profile state["profile"]
-  program state["program"]
-  service state["service"]
-  interface_type state["interface_type"]
+  local_address state['local_address']
+  local_port state['local_port']
+  remote_address state['remote_address']
+  remote_port state['remote_port']
+  direction state['direction']
+  protocol state['protocol']
+  firewall_action state['firewall_action']
+  profile state['profile']
+  program state['program']
+  service state['service']
+  interface_type state['interface_type']
 end
 
 action :create do
   if current_resource
     converge_if_changed :rule_name, :local_address, :local_port, :remote_address, :remote_port, :direction,
                         :protocol, :firewall_action, :profile, :program, :service, :interface_type do
-      cmd = firewall_command("Set")
+      cmd = firewall_command('Set')
       powershell_out!(cmd)
     end
   else
     converge_by("create firewall rule #{new_resource.rule_name}") do
-      cmd = firewall_command("New")
+      cmd = firewall_command('New')
       powershell_out!(cmd)
     end
   end
@@ -86,7 +86,7 @@ action_class do
   # @return [String] firewall create command
   def firewall_command(cmdlet_type)
     cmd = "#{cmdlet_type}-NetFirewallRule -Name '#{new_resource.rule_name}'"
-    cmd << " -DisplayName '#{new_resource.rule_name}'" if cmdlet_type == "New"
+    cmd << " -DisplayName '#{new_resource.rule_name}'" if cmdlet_type == 'New'
     cmd << " -Description '#{new_resource.description}'" if new_resource.description
     cmd << " -LocalAddress '#{new_resource.local_address}'" if new_resource.local_address
     cmd << " -LocalPort '#{new_resource.local_port}'" if new_resource.local_port

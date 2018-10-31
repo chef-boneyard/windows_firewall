@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rule_test
+# Cookbook Name:: test
 # Recipe:: default
 # tests the firewall resource
 
