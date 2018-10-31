@@ -43,6 +43,12 @@ property :service, String
 property :interface_type, [Symbol, String], default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
                                             coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
 
+alias_method :localip, :local_address
+alias_method :remoteip, :remote_address
+alias_method :localport, :local_port
+alias_method :remoteport, :remote_port
+alias_method :interfacetype, :interface_type
+
 load_current_value do
   load_state_cmd = load_firewall_state(rule_name)
   output = powershell_out(load_state_cmd)
