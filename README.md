@@ -1,6 +1,6 @@
 # windows_firewall Cookbook
 
-[![Cookbook Version](https://img.shields.io/cookbook/v/windows_firewall.svg)](https://supermarket.chef.io/cookbooks/windows_firewall)
+[![Cookbook Version](https://img.shields.io/cookbook/v/windows_firewall.svg)](https://supermarket.chef.io/cookbooks/windows_firewall) [![Build status](https://ci.appveyor.com/api/projects/status/39o3tnenw2njhw1b/branch/master?svg=true)](https://ci.appveyor.com/project/ChefWindowsCookbooks/windows-firewall/branch/master)
 
 This cookbook configures Windows firewall rules.
 
