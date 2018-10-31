@@ -4,13 +4,13 @@
 
 This cookbook configures Windows firewall rules.
 
-# Requirements
+## Requirements
 
-## Chef
+### Chef
 
 - 12.7+
 
-## Platforms
+### Platforms
 
 - Windows Vista
 - Windows 7
