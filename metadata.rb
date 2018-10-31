@@ -8,4 +8,4 @@ source_url       'https://github.com/chef-cookbooks/windows_firewall'
 issues_url       'https://github.com/chef-cookbooks/windows_firewall/issues'
 supports         'windows'
 version          '4.1.0'
-chef_version     '>= 12.7' if respond_to?(:chef_version)
+chef_version     '>= 13.0' if respond_to?(:chef_version)

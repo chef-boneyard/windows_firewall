@@ -8,7 +8,7 @@ This cookbook configures Windows firewall rules.
 
 ### Chef
 
-- 12.7+
+- 13+
 
 ### Platforms
 
