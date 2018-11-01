@@ -8,8 +8,7 @@ This cookbook configures Windows firewall rules.
 
 ### Platforms
 
-- Windows 7, 8, 8.1, 10
-- Windows Server 2008 R2
+- Windows 8, 8.1, 10
 - Windows Server 2012 (R1, R2)
 - Windows Server 2016
 
