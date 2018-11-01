@@ -42,6 +42,7 @@ property :program, String
 property :service, String
 property :interface_type, [Symbol, String], default: :any, equal_to: [:any, :wireless, :wired, :remoteaccess],
                                             coerce: proc { |i| i.is_a?(String) ? i.downcase.to_sym : i }
+property :enabled, [TrueClass, FalseClass], default: true
 
 alias_method :localip, :local_address
 alias_method :remoteip, :remote_address
@@ -68,12 +69,13 @@ load_current_value do
   program state['program']
   service state['service']
   interface_type state['interface_type']
+  enabled state['enabled']
 end
 
 action :create do
   if current_resource
     converge_if_changed :rule_name, :local_address, :local_port, :remote_address, :remote_port, :direction,
-                        :protocol, :firewall_action, :profile, :program, :service, :interface_type do
+                        :protocol, :firewall_action, :profile, :program, :service, :interface_type, :enabled do
       cmd = firewall_command('Set')
       powershell_out!(cmd)
     end
@@ -113,6 +115,7 @@ action_class do
     cmd << " -Program '#{new_resource.program}'" if new_resource.program
     cmd << " -Service '#{new_resource.service}'" if new_resource.service
     cmd << " -InterfaceType '#{new_resource.interface_type}'" if new_resource.interface_type
+    cmd << " -Enabled '#{new_resource.enabled}'"
 
     cmd
   end
@@ -144,6 +147,7 @@ def load_firewall_state(rule_name)
       program = $applicationFilter.Program
       service = $serviceFilter.Service
       interface_type = $interfaceTypeFilter.InterfaceType.ToString()
+      enabled = [bool]::Parse($rule.Enabled.ToString())
     }) | ConvertTo-Json
   EOH
 end
