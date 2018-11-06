@@ -28,9 +28,11 @@ require 'chef/json_compat'
 property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
 property :local_address, String
-property :local_port, [String, Integer]
+property :local_port, [String, Integer, Array],
+         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort }
 property :remote_address, String
-property :remote_port, [String, Integer]
+property :remote_port, [String, Integer, Array],
+         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort }
 property :direction, [Symbol, String], default: :inbound, equal_to: [:inbound, :outbound],
                                        coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
@@ -59,9 +61,9 @@ load_current_value do
     state = Chef::JSONCompat.from_json(output.stdout)
   end
   local_address state['local_address']
-  local_port state['local_port']
+  local_port Array(state['local_port']).sort
   remote_address state['remote_address']
-  remote_port state['remote_port']
+  remote_port Array(state['remote_port']).sort
   direction state['direction']
   protocol state['protocol']
   firewall_action state['firewall_action']
@@ -105,9 +107,9 @@ action_class do
     cmd << " -DisplayName '#{new_resource.rule_name}'" if cmdlet_type == 'New'
     cmd << " -Description '#{new_resource.description}'" if new_resource.description
     cmd << " -LocalAddress '#{new_resource.local_address}'" if new_resource.local_address
-    cmd << " -LocalPort #{new_resource.local_port}" if new_resource.local_port
+    cmd << " -LocalPort #{new_resource.local_port.join(',')}" if new_resource.local_port
     cmd << " -RemoteAddress '#{new_resource.remote_address}'" if new_resource.remote_address
-    cmd << " -RemotePort #{new_resource.remote_port}" if new_resource.remote_port
+    cmd << " -RemotePort #{new_resource.remote_port.join(',')}" if new_resource.remote_port
     cmd << " -Direction '#{new_resource.direction}'" if new_resource.direction
     cmd << " -Protocol '#{new_resource.protocol}'" if new_resource.protocol
     cmd << " -Action '#{new_resource.firewall_action}'" if new_resource.firewall_action
@@ -127,6 +129,7 @@ private
 # # @return [String] current firewall state
 def load_firewall_state(rule_name)
   <<-EOH
+    Remove-TypeData System.Array # workaround for PS bug here: https://bit.ly/2SRMQ8M
     $rule = Get-NetFirewallRule -Name '#{rule_name}'
     $addressFilter = $rule | Get-NetFirewallAddressFilter
     $portFilter = $rule | Get-NetFirewallPortFilter
