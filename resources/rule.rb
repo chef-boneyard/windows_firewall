@@ -105,9 +105,9 @@ action_class do
     cmd << " -DisplayName '#{new_resource.rule_name}'" if cmdlet_type == 'New'
     cmd << " -Description '#{new_resource.description}'" if new_resource.description
     cmd << " -LocalAddress '#{new_resource.local_address}'" if new_resource.local_address
-    cmd << " -LocalPort '#{new_resource.local_port}'" if new_resource.local_port
+    cmd << " -LocalPort #{new_resource.local_port}" if new_resource.local_port
     cmd << " -RemoteAddress '#{new_resource.remote_address}'" if new_resource.remote_address
-    cmd << " -RemotePort '#{new_resource.remote_port}'" if new_resource.remote_port
+    cmd << " -RemotePort #{new_resource.remote_port}" if new_resource.remote_port
     cmd << " -Direction '#{new_resource.direction}'" if new_resource.direction
     cmd << " -Protocol '#{new_resource.protocol}'" if new_resource.protocol
     cmd << " -Action '#{new_resource.firewall_action}'" if new_resource.firewall_action

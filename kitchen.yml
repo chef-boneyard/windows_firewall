@@ -19,25 +19,25 @@ platforms:
   - name: windows_2012r2-chef13
     driver_config:
       gui: true
-      box: mwrock/Windows2012R2
+      box: tas50/windows_2012r2
       gui: true
     provisioner:
       require_chef_omnibus: 13.1.31
   - name: windows_2012r2
     driver_config:
       gui: true
-      box: mwrock/Windows2012R2
+      box: tas50/windows_2012r2
   - name: windows_2016-chef13
     driver_config:
       gui: true
-      box: mwrock/Windows2016
+      box: tas50/windows_2016
       gui: true
     provisioner:
       require_chef_omnibus: 13.1.31
   - name: windows_2016
     driver_config:
       gui: true
-      box: mwrock/Windows2016
+      box: tas50/windows_2016
 suites:
   - name: default
     run_list:

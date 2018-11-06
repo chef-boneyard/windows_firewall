@@ -4,7 +4,7 @@
 # tests the firewall resource
 
 windows_firewall_rule 'Apache' do
-  local_port '8080'
+  local_port '8080,80'
   protocol 'TCP'
   firewall_action :allow
   program 'c:\program files\test.exe'
