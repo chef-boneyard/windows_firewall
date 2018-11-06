@@ -28,9 +28,9 @@ require 'chef/json_compat'
 property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
 property :local_address, String
-property :local_port, String
+property :local_port, [String, Integer]
 property :remote_address, String
-property :remote_port, String
+property :remote_port, [String, Integer]
 property :direction, [Symbol, String], default: :inbound, equal_to: [:inbound, :outbound],
                                        coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
