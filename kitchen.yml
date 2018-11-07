@@ -27,6 +27,8 @@ platforms:
     driver_config:
       gui: true
       box: tas50/windows_2012r2
+    provisioner:
+      require_chef_omnibus: 14.6
   - name: windows_2016-chef13
     driver_config:
       gui: true
@@ -38,6 +40,8 @@ platforms:
     driver_config:
       gui: true
       box: tas50/windows_2016
+    provisioner:
+      require_chef_omnibus: 14.6
 suites:
   - name: default
     run_list:
