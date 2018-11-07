@@ -29,10 +29,10 @@ property :rule_name, String, name_property: true
 property :description, String, default: 'Firewall rule'
 property :local_address, String
 property :local_port, [String, Integer, Array],
-         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort }
+         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort.map(&:to_s) }
 property :remote_address, String
 property :remote_port, [String, Integer, Array],
-         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort }
+         coerce: proc { |d| d.is_a?(String) ? d.split(/\s*,\s*/).sort : Array(d).sort.map(&:to_s) }
 property :direction, [Symbol, String], default: :inbound, equal_to: [:inbound, :outbound],
                                        coerce: proc { |d| d.is_a?(String) ? d.downcase.to_sym : d }
 property :protocol, String, default: 'TCP'
