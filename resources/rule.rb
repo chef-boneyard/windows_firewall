@@ -23,6 +23,9 @@
 # limitations under the License.
 #
 
+chef_version_for_provides '< 14.7' if respond_to?(:chef_version_for_provides)
+resource_name :widows_firewall
+
 require 'chef/json_compat'
 
 property :rule_name, String, name_property: true
