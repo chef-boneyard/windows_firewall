@@ -24,7 +24,7 @@
 #
 
 chef_version_for_provides '< 14.7' if respond_to?(:chef_version_for_provides)
-resource_name :widows_firewall
+resource_name :windows_firewall_rule
 
 require 'chef/json_compat'
 
