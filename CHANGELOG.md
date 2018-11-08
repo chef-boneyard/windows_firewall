@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of windows_firewall.
 
+## 5.0.1 (2018-11-08)
+
+- Remove 2008r2/8 support from the readme since we don't actually support them
+- Allow local_port and remote_port to take a comma separated list or ports, integers, or arrays of string/integers.
+- Avoid deprecation warnings on Chef 14.7+
+
 ## 5.0.0 (2018-10-31)
 
 - The windows_firewall_entry resource has been mostly rewritten to use PowerShell and provide full idempotency. This resolves a large number of outstainding issues with the resource and gets it ready for inclusion in the chef-client itself
