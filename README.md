@@ -4,7 +4,9 @@
 
 This cookbook configures Windows firewall rules.
 
-``Note``: This resource is now built into chef-client 14.7+. If you are running Chef 14.7+ you no longer need to depend on this cookbook in your infrastructure of the windows_firewall_rule resource
+## Deprecation
+
+This resource is now built into chef-client 14.7+. If you are running Chef 14.7+ you no longer need to depend on this cookbook in your infrastructure of the windows_firewall_rule resource. All future development of the windows_firewall resource will take place directly in the chef-client. We highly recommen upgrading your chef-client for the latest and greatest functionality.
 
 ## Requirements
 
